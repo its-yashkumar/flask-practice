@@ -6,5 +6,9 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Hello, World!</p>"
 
+@app.route("/products")
+def products():
+    return "<p>This is Products Page</p>"
+
 if __name__ == "__main__":
     app.run(debug=True)
