@@ -1,18 +1,38 @@
 {
     "marvis-event-network": {
-        "default":"model 3",
-        "models":["model 4","model 3","model 2","model 1"]
+        "default": "model 1",
+        "models": [
+            "model 4",
+            "model 3",
+            "model 2",
+            "model 1"
+        ]
     },
-    "papi-edge-stats":{
-        "default":"model 1",
-        "models":["model 4","model 3","model 2","model 1"]
+    "papi-edge-stats": {
+        "default": "model 4",
+        "models": [
+            "model 4",
+            "model 3",
+            "model 2",
+            "model 1"
+        ]
     },
-    "papi-alerts":{
-        "default":"model 2",
-        "models":["model 4","model 3","model 2","model 1"]
+    "papi-alerts": {
+        "default": "model 2",
+        "models": [
+            "model 4",
+            "model 3",
+            "model 2",
+            "model 1"
+        ]
     },
-    "marvis-sdk-client-stats":{
-        "default":"model 4",
-        "models":["model 4","model 3","model 2","model 1"]
+    "marvis-sdk-client-stats": {
+        "default": "model 4",
+        "models": [
+            "model 4",
+            "model 3",
+            "model 2",
+            "model 1"
+        ]
     }
 }
