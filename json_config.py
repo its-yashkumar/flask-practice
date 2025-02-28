@@ -60,6 +60,9 @@ st.write('# Solution without using a dataframe')
 if 'topology_model' not in st.session_state:
     st.session_state.topology_model = []
 
+if "update_text" not in st.session_state:
+    st.session_state.update_text = None
+
 def store_temp_config(config_topology, default_model):
     """Store topology configuration persistently as a list of tuples, preventing duplicates."""
     
@@ -114,25 +117,33 @@ with txtColumns[1]:
 
 # st.button('Add Topology',on_click=add_txtForm,key="Add topology",args=(config_topology,default_model,topology_model))
 if st.button("Save Topology"):
-    update_text = store_temp_config(st.session_state.input_topology, st.session_state.input_model)
+    st.session_state.update_text = store_temp_config(st.session_state.input_topology, st.session_state.input_model)
 
-    if update_text == "overwrite_prompt":
-        bool_input = st.radio("Topology already exists. Overwrite?", ["Yes", "No"], index=None)
+    if st.session_state.update_text == "overwrite_prompt":
+        st.warning("Topology already exists. Do you want to overwrite it?")
 
-        if bool_input == "Yes":
-            # Overwrite the existing topology
-            for i, (topo, _) in enumerate(st.session_state.topology_model):
-                if topo == st.session_state.input_topology:
-                    st.session_state.topology_model[i] = (st.session_state.input_topology, st.session_state.input_model)
-                    st.success(f"Updated '{st.session_state.input_topology}' to '{st.session_state.input_model}'")
-                    update_text = True  # Mark update success
+        col1, col2 = st.columns(2)  # Create two side-by-side buttons
 
-        if bool_input == "No":
-            st.warning("Topology not updated.")
-            update_text = False  # Mark update as canceled
+        with col1:
+            if st.button("Yes, Overwrite"):
+                # Overwrite existing topology
+                for i, (topo, _) in enumerate(st.session_state.topology_model):
+                    if topo == st.session_state.input_topology:
+                        st.session_state.topology_model[i] = (st.session_state.input_topology, st.session_state.input_model)
+                        st.success(f"Updated '{st.session_state.input_topology}' to '{st.session_state.input_model}'")
+                        st.session_state.update_text = True  # Mark update success
+                        break
+                else:
+                    st.warning("Topology not found in session state.")
 
-    if update_text:
-        add_txtForm()
+        with col2:
+            if st.button("No, Keep Existing"):
+                st.warning("Topology not updated.")
+                st.session_state.update_text = False  # Mark update as canceled
+
+if st.session_state.update_text is True:
+    add_txtForm()
+
 st.write("### Stored Topologies:")
 st.write(st.session_state.topology_model)
 # import streamlit as st
